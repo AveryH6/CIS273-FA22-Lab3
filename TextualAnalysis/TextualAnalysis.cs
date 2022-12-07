@@ -24,46 +24,37 @@ namespace TextualAnalysis
 
             // split the string into words (filtering out the empty strings)
 
-            var words = cleanString.ToLower()
-                                   .Split()
-                                   .Where(s => s != "");
+            var words = cleanString.ToLower().Split().Where(s => s != "");
 
             string[] stopWords = GetStopWordsFromFile(stopWordFilePath);
 
+            HashSet<string> wordSet = new HashSet<string>();
 
-            // foreach word do something
-            foreach (var word in words)
+            foreach( var i in stopWords )
             {
-            
-            // if not ignoring stop words and word is a stop word
-                if( ignoreStopWords == false && stopWords.Contains(word))
-                {
-                    // Skip the word
-                    continue;
-                }
-            // else
-                else
-                {
-                    // either add word if new with count of one
-
-                    if( wordCounts[word] == 0 )
-                    {
-                        wordCounts[word] = 1;
-                    }
-
-                    wordCounts[word]++;
-                    //if( wordCounts.ContainsKey(word))
-                    //{
-                    //    wordCounts[word] = wordCounts[word] + 1;
-                    //}
-
-                    //wordCounts[word] = 1;
-                }
-            // or increment the word count if it's already in the dictionary
-
-
+                wordSet.Add(i);
             }
 
+            foreach( var w in words )
+            {
+                if( wordSet.Contains(w) && ignoreStopWords == true )
+                {
+                    continue;
+                }
+
+                else
+                {
+                    if( wordCounts.ContainsKey(w))
+                    {
+                        wordCounts[w]++;
+                    }
+
+                    else
+                    {
+                        wordCounts.Add(w,1);
+                    }
+                }
+            }
             return wordCounts;
         }
 
@@ -74,8 +65,11 @@ namespace TextualAnalysis
             string text = System.IO.File.ReadAllText(path);
 
             // call the other method
-            return ComputeWordFrequencies(text);
+            var wordCounts = ComputeWordFrequencies(text, ignoreStopWords);
+
             // return the result of the other method
+
+            return wordCounts;
 
         }
 

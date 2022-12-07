@@ -85,7 +85,7 @@ namespace Set
             {
                 if( set2.Contains(item))
                 {
-                    list.Add(set1);
+                    list.Add(item);
                     sameNum.Add(item);
                     list.Remove(item);
 
@@ -97,7 +97,7 @@ namespace Set
             {
                 if (set1.Contains(item))
                 {
-                    list.Add(set2);
+                    list.Add(item);
                     sameNum.Add(item);
                     list.Remove(item);
 
