@@ -20,7 +20,7 @@ namespace TextualAnalysis
             // s = "all the faith he had had had had no effect."
 
             // remove punctuation
-            var cleanString = Regex.Replace(s, @"[ ^\w\s ]", "");
+            var cleanString = Regex.Replace(s, @"[^\w\s ]", "");
 
             // split the string into words (filtering out the empty strings)
 
@@ -30,14 +30,14 @@ namespace TextualAnalysis
 
             HashSet<string> wordSet = new HashSet<string>();
 
-            foreach( var i in stopWords )
+            foreach (var i in stopWords)
             {
                 wordSet.Add(i);
             }
 
-            foreach( var w in words )
+            foreach(var w in words)
             {
-                if( wordSet.Contains(w) && ignoreStopWords == true )
+                if(wordSet.Contains(w) && ignoreStopWords == true)
                 {
                     continue;
                 }
@@ -65,11 +65,11 @@ namespace TextualAnalysis
             string text = System.IO.File.ReadAllText(path);
 
             // call the other method
-            var wordCounts = ComputeWordFrequencies(text, ignoreStopWords);
+            var wordCount = ComputeWordFrequencies(text, ignoreStopWords);
 
             // return the result of the other method
 
-            return wordCounts;
+            return wordCount;
 
         }
 
